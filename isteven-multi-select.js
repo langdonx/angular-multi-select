@@ -525,7 +525,7 @@ angular.module( 'isteven-multi-select', ['ng'] ).directive( 'istevenMultiSelect'
                 }
 				else if (typeof $scope.showSelectedText !== 'undefined' && $scope.showSelectedText !== "") {
 					//https://github.com/isteven/angular-multi-select/issues/424
-					$scope.varButtonLabel = $scope.showSelectedText;
+				    $scope.varButtonLabel = $scope.showSelectedText + ' (' + $scope.outputModel.length + ')';
 				}
 				else {                
                     var tempMaxLabels = $scope.outputModel.length;
