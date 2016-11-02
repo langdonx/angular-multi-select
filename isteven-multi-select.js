@@ -46,7 +46,8 @@ angular.module( 'isteven-multi-select', ['ng'] ).directive( 'istevenMultiSelect'
 
             // settings based on attribute
             isDisabled      : '=',
-
+			showSelectedText : '=',
+			
             // callbacks
             onClear         : '&',  
             onClose         : '&',
@@ -522,7 +523,11 @@ angular.module( 'isteven-multi-select', ['ng'] ).directive( 'istevenMultiSelect'
                     // https://github.com/isteven/angular-multi-select/pull/19                    
                     $scope.varButtonLabel = $scope.lang.nothingSelected;
                 }
-                else {                
+				else if (typeof $scope.showSelectedText !== 'undefined' && $scope.showSelectedText !== "") {
+					//https://github.com/isteven/angular-multi-select/issues/424
+					$scope.varButtonLabel = $scope.showSelectedText;
+				}
+				else {                
                     var tempMaxLabels = $scope.outputModel.length;
                     if ( typeof attrs.maxLabels !== 'undefined' && attrs.maxLabels !== '' ) {
                         tempMaxLabels = attrs.maxLabels;
@@ -1004,8 +1009,12 @@ angular.module( 'isteven-multi-select', ['ng'] ).directive( 'istevenMultiSelect'
             // watch for changes in directive state (disabled or enabled)
             $scope.$watch( 'isDisabled' , function( newVal ) {         
                 $scope.isDisabled = newVal;                               
-            });            
-            
+            });
+			$scope.$watch("showSelectedText" , function( newVal ) {
+				if( newVal ) {
+					$scope.showSelectedText = newVal;
+				}
+			});
             // this is for touch enabled devices. We don't want to hide checkboxes on scroll. 
             var onTouchStart = function( e ) { 
             	$scope.$apply( function() {
